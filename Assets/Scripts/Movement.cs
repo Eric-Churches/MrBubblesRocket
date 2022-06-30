@@ -1,11 +1,11 @@
 
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 public class Movement : MonoBehaviour
 {
     private Rigidbody _rb;// WE PUT rigidbody into a variable
+    private AudioSource _audioSource;
 
     [SerializeField] float mainThrust = 1000f;
 
@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody>();// the value of the variable
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,7 +30,18 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             _rb.AddRelativeForce(Vector3.up * (mainThrust * Time.deltaTime));
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+           
         }
+        else
+        {
+            _audioSource.Stop();
+        }
+
+        
 
         
     }
